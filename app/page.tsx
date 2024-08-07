@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Homepage from "./components/Homepage";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { SkeletonTheme } from "react-loading-skeleton";
 
 export const metadata: Metadata = {
   title: 'Gulime - Your One-Stop Shop for All Your Needs',
@@ -12,8 +13,10 @@ export default function Home() {
 return (
 <>
 <Navbar/>
-  <Homepage/>  
-  <Footer/>
+<SkeletonTheme baseColor="grey" highlightColor="#e6e6e6">
+<Homepage/>
+</SkeletonTheme>
+<Footer/>
 </>
 );
 }

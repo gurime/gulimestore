@@ -64,6 +64,13 @@ body, html {
   place-items: center;
   }
 
+  .small-nav{
+    display: flex;
+    justify-content: space-evenly;
+    place-items: center;
+}
+
+
   .cart-link {
     position: relative;
   }
@@ -85,41 +92,250 @@ body, html {
     text-align: center;
   }
 
-  .doctorcard {
-    display: flex;
-    align-items: center;
+  .search-results-container {
+    background-color: #fff;
+    z-index: 999;
+    position: absolute;
+
+    margin: 0 auto;
     padding: 1rem;
+  }
+
+  .search-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+
+  .search-result-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-card {
+    display: flex;
+    flex-direction: column;
     border: 1px solid #ddd;
     border-radius: 8px;
-    margin: .5rem 0;
-    background-color: #f9f9f9;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+
+  .product-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .product-image {
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .product-info {
+    padding: 1rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .product-title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0 0 0.5rem 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    color: #111;
+  }
+
+  .product-price {
+    font-size: 1rem;
+    color: #666;
+    margin: 0;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes slideOut {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+  
+@media(min-width:968px){
+    .burger{
+        display: none;
+    }
 }
 
-.doctorcard-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+  @media (max-width: 968px) {
+    .nav { 
+      flex-direction: column; 
+      align-items: normal; 
+    }
+  
+    .navlinks {
+      position: fixed;
+      top: 0;
+      left: -250px; /* Start off-screen */
+      height: 100%;
+      width: 250px;
+      background-color: #265cda;
+      line-height: 3;
+      flex-direction: column;
+      padding-top: 4rem;
+      transition: left 0.3s ease-in-out;
+      z-index: 1000;
+    }
+  
+    .nav-open .navlinks {
+      left: 0; /* Slide in when nav is open */
+    }
+  
+    .burger {
+      display: block;
+      z-index: 1001;
+      cursor: pointer;
+    }
+  
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+  
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .search-results {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+  }
 
-.search-results-container {
-  background-color: #fff;
-  z-index: 999;
-  position: absolute;
-  width: 100%;
-} 
-
-.search-results {
-  display: flex;
-  justify-items: center;
-  justify-content: center;
-}
-
-.search-results-container a {
-  text-decoration: none;
-  font-weight: bolder;
-}
+  @media (max-width: 480px) {
+    .search-results {
+      grid-template-columns: 1fr;
+    }
+  }
       
  /* navbar stops here */
+ .hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: repeat(2, auto);
+  gap: 1rem;
+}
+
+@media(max-width:768px){
+  .hero-grid{
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.main-content {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+
+.main-content h2{
+  text-align: center;
+}
+
+.main-content-img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+}
+
+.dashprice{
+  text-align: center;
+}
+
+.first-left-content {
+  padding: 10px;
+  width: 100%; /* Maintain full width */
+}
+
+.content-wrapper {
+  display: flex; /* Enable flexbox */
+  flex-direction: column; /* Stack vertically */
+  align-items: center; /* Center content horizontally (optional) */
+}
+
+.first-left-content h2{
+  text-align: center;
+}
+
+.first-left-content img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+}
+
+.first-left-content button {
+  background-color: #007dc6;
+  border: none;
+  outline: none;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+
+
+.second-left-content {
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
+  display: grid;
+  padding: 10px;
+  width: 100%;
+}
+.second-left-content h2{
+  text-align: center;
+}
+
+.second-left-content img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+}
+
+.second-left-content button {
+  background-color: #007dc6;
+  border: none;
+  outline: none;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+ /* homepage stops here */
 
  footer{
   padding: 3px;
@@ -208,4 +424,12 @@ body, html {
   line-height: 2;
   text-align: center;
   letter-spacing: 1px;
+  }
+
+  .error{
+    color: red;
+  }
+
+  .success{
+    color: #0dfda1;
   }

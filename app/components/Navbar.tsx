@@ -7,7 +7,7 @@ import navlogo from '../img/gulime.png'
 import axios from 'axios';
 import uuid from 'uuid4';
 import Link from 'next/link';
-import { ShoppingCart } from 'lucide-react';
+import { Menu, ShoppingCart, X } from 'lucide-react';
 import { auth, db } from '../Config/firebase';
 import { signOut, onAuthStateChanged, User } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
@@ -34,6 +34,26 @@ export default function Navbar() {
   const [cartCount, setCartCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  useEffect(() => {
+    const body = document.body;
+    if (isOpen) {
+      body.style.overflow = 'hidden';
+    } else {
+      body.style.overflow = 'visible';
+    }
+    
+    return () => {
+      body.style.overflow = 'visible';
+    };
+  }, [isOpen]);
+;
+    
 
   const overlayStyle: React.CSSProperties = {
     position: 'fixed',
@@ -86,14 +106,15 @@ export default function Navbar() {
   };
 
   const handleSearch = async () => {
-    if (!searchTerm.trim()) {
+    const trimmedTerm = searchTerm.trim();
+    if (!trimmedTerm) {
       setSearchResults([]);
       return;
     }
-
+  
     try {
       const response = await axios.get('/api/search', {
-        params: { term: searchTerm },
+        params: { term: trimmedTerm },
       });
       setSearchResults(response.data.results || []);
       setIsOverlayActive(true);
@@ -130,9 +151,10 @@ export default function Navbar() {
       setIsOverlayActive(false);
     }
   }, [searchTerm]);
+  
   const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value.trim());
-    setIsOverlayActive(event.target.value.trim().length > 0);
+    setSearchTerm(event.target.value);
+    setIsOverlayActive(event.target.value.length > 0);
   };
 
   const handleLogout = async () => {
@@ -164,13 +186,18 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="nav">
+      <div className={`nav ${isOpen ? 'nav-open' : ''}`}>
+      <div className='small-nav'>
+<div className="burger" onClick={toggleMenu}>
+{isOpen ? <X size={24} color="#fff" /> : <Menu size={24} color="#fff" />}
+</div>
         <Image
           onClick={() => router.push('/')}
           src={navlogo}
           width={140}
           alt="Doctor Care Logo"
         />
+        </div>
         <div style={overlayStyle}></div>
 
         <form style={{ width: '100%', position: 'relative' }} onSubmit={(e) => e.preventDefault()}>
@@ -184,17 +211,17 @@ export default function Navbar() {
             onChange={handleSearchInputChange}
           />
           {isOverlayActive && (
-            <div className="search-results-container">
+              <div className="search-results-container">
               <div className="search-results">
                 {searchResults.length > 0 ? (
                   searchResults.map((product) => (
                     <div key={product.id || uuid()} className="search-result-item">
-                      <Link href={`/pages/Product/${product.id}`}>
-                        <div className="doctorcard">
-                          <div className="doctorcard-info"> 
-                            <img className="doctorcard-image" src={product.coverimage} alt={product.coverimage} />
-                            <p className="doctorcard-name">{product.title}</p>
-                            <p className="doctorcard-role">{product.price}</p>
+                      <Link href={`/pages/ProductDetails/${product.id}`}>
+                        <div className="product-card">
+                          <img className="product-image" src={product.coverimage} alt={product.title} />
+                          <div className="product-info">
+                            <h3 className="product-title">{product.title}</h3>
+                            <p className="product-price">${product.price}</p>
                           </div>
                         </div>
                       </Link>
@@ -205,15 +232,16 @@ export default function Navbar() {
                 )}
               </div>
             </div>
+       
           )}
         </form>
 
-        <div className="navlinks">
-          <Link href="/">Home</Link>
-          <Link href="/pages/Technology">Technology</Link>
-          <Link href="/pages/Music">Music</Link>
-          <Link href="/pages/Fashion">Fashion</Link>
-          <Link href="/pages/Sports">Sports</Link>
+        <div className={`navlinks ${isOpen ? 'open' : ''}`}>
+          <Link href="/" onClick={toggleMenu}>Home</Link>
+          <Link href="/pages/Technology" onClick={toggleMenu}>Technology</Link>
+          <Link href="/pages/Music" onClick={toggleMenu}>Music</Link>
+          <Link href="/pages/Fashion" onClick={toggleMenu}>Fashion</Link>
+          <Link href="/pages/Sports" onClick={toggleMenu}>Sports</Link>
 
           {isSignedIn && userData ? (
             <>
@@ -236,6 +264,8 @@ export default function Navbar() {
           </Link>
           <Link href="#" onClick={toggleFooter}>More:</Link>
         </div>
+        {isOpen && <div className="overlay" onClick={toggleMenu}></div>}
+
       </div>
 
       <div style={{ position: 'relative', width: '100%' }}>
