@@ -13,9 +13,9 @@ export default function Home() {
 return (
 <>
 <Navbar/>
-<SkeletonTheme baseColor="grey" highlightColor="#e6e6e6">
+{/* <SkeletonTheme baseColor="grey" highlightColor="#e6e6e6"> */}
 <Homepage/>
-</SkeletonTheme>
+{/* </SkeletonTheme> */}
 <Footer/>
 </>
 );

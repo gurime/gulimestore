@@ -21,7 +21,7 @@ type SearchResult = {
 
 type UserData = {
   id: string;
-  first_name: string;
+  firstName: string;
 };
 
 export default function Navbar() {
@@ -172,7 +172,7 @@ export default function Navbar() {
         setIsSignedIn(true);
         setUserData({
           id: user.uid,
-          first_name: user.displayName || 'User'
+          firstName: user.displayName || 'User'
         });
       } else {
         setIsSignedIn(false);
@@ -246,8 +246,8 @@ export default function Navbar() {
           {isSignedIn && userData ? (
             <>
               <Link href="/pages/Account">Account</Link>
-              <span className="sm-name">{userData.first_name}</span>
-              <button onClick={handleLogout}>Logout</button>
+              <span className="sm-name">{userData.firstName}</span>
+              <span  style={{color:'#fff',cursor:'pointer'}} onClick={handleLogout}>Logout</span>
             </>
           ) : (
             <>
