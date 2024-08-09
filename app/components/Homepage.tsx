@@ -137,7 +137,7 @@ const Homepage: React.FC = () => {
                     <Link href={`/pages/ProductDetails/${product.id}`}>
                       <img src={product.coverimage} className="main-content-img" alt={product.title} />
                     </Link>
-                    <span style={{ fontSize: '17px', lineHeight: '40px' }}>{product.title}</span>
+                    <span style={{ fontSize: '17px', lineHeight: '40px'}}>{product.title.slice(0,100)}...</span>
                   </div>
                 </div>
               )}
@@ -148,7 +148,7 @@ const Homepage: React.FC = () => {
                     <Link href={`/pages/ProductDetails/${product.id}`}>
                       <img src={product.coverimage} alt={product.title} />
                     </Link>
-                    <span style={{ fontSize: '20px', lineHeight: '40px' }}>{product.title}</span>
+                    <span style={{ fontSize: '20px', lineHeight: '40px',textAlign:'center'  }}>{product.title.slice(0,100)}...</span>
                     <div className='dashprice' >${product.price}</div>
                     <div>
                       <button onClick={() => handleAddToCart(product)}>Add to cart</button>
@@ -163,7 +163,7 @@ const Homepage: React.FC = () => {
                     <Link href={`/pages/ProductDetails/${product.id}`}>
                       <img src={product.coverimage} alt={product.title} />
                     </Link>
-                    <span style={{ fontSize: '20px', lineHeight: '40px' }}>{product.title}</span>
+                    <span style={{ fontSize: '20px', lineHeight: '40px',textAlign:'center'  }}>{product.title.slice(0,100)}...</span>
                     <div className='dashprice' >${product.price}</div>
                     <div>
                       <button onClick={() => handleAddToCart(product)}>Add to cart</button>

@@ -70,7 +70,7 @@ export default function AddToCartBtn({ articleId, product }: { articleId: string
  
   return (
     <>
-      <button onClick={() => handleAddToCart(product)}>Add to cart</button>
+      <button className='add-to-cart-btn' onClick={() => handleAddToCart(product)}>Add to cart</button>
     </>
   );
 }

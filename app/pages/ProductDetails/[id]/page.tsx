@@ -3,6 +3,8 @@ import { getArticle } from "../lib";
 import Navbar from "@/app/components/Navbar";
 import ImageGallery from "@/app/components/ImageGallery";
 import AddToCartBtn from "../../Cart/AddToCart";
+import ContentDisplay from "@/app/components/ContentDisplay";
+import ProductRatings from "@/app/components/ProductRating";
 
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<{ title: string }> {
@@ -26,7 +28,6 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
       };
     }
   }
-
 
   export default async function DetailsPage({ params }: { params: { id: string } }): Promise<JSX.Element> {
     const articleId: string = params.id;
@@ -54,45 +55,48 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
       <>
         <Navbar />
         <div className="product-container">
+          <ImageGallery images={images} />
           <div className="product-details">
-            <ImageGallery images={images} />
             <div className="product-info">
               <h1 className="detailproduct-title">{product.title}</h1>
-              {/* <ProductRatings productId={articleId} /> */}
-              <p className="detailproduct-price">${product.price}</p>
-              <div className="product-details-info">
-                <p>
-                  <strong>About this item:</strong>
-                </p>
-                {/* <ul>
-                  <ContentDisplay
-                    content={product.content}
-                    content1={product.content1}
-                    content2={product.content2}
-                    content3={product.content3}
-                    content4={product.content4}
-                    content5={product.content5}
-                    content6={product.content6}
-                    content7={product.content7}
-                    content8={product.content8}
-                    content9={product.content9}
-                    content10={product.content10}
-                  />
-                </ul> */}
+              <div className="product-ratings">
+                <div className="rating-stars">
+                <ProductRatings productId={articleId}/>
+                {/* <LeaveReview articleId={articleId/>}> */}
+                </div>
+                <span className="rating-count">{product.ratingCount} </span>
               </div>
+              <p className="detailproduct-price">${product.price}</p>
               <AddToCartBtn articleId={articleId} product={product} />
               <div className="product-delivery">
                 <p>
-                  <strong>Delivery:</strong> Get it by {formattedDate}
+                  <strong style={{padding:'3rem'}}>Delivery:</strong> Get it by {formattedDate}
                 </p>
                 <p>
-                  <strong>Pickup:</strong> Free pickup today at{' '}
-                  <a href="#">Gulime</a>
+                  <strong style={{padding:'3rem'}}>Pickup:</strong> Free pickup today at <a href="#">Gulime</a>
                 </p>
               </div>
             </div>
-          </div>
-          <div className="body-content">
+            <div className="product-details-info">
+              <p>
+                <strong style={{padding:'3rem'}}>About this item:</strong>
+              </p>
+              <ul>
+                <ContentDisplay
+                  content={product.content}
+                  content1={product.content1}
+                  content2={product.content2}
+                  content3={product.content3}
+                  content4={product.content4}
+                  content5={product.content5}
+                  content6={product.content6}
+                  content7={product.content7}
+                  content8={product.content8}
+                  content9={product.content9}
+                  content10={product.content10}
+                />
+              </ul>
+            </div>
           </div>
         </div>
         <Footer />
