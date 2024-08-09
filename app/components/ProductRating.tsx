@@ -155,31 +155,16 @@ const ProductRatings: React.FC<ProductRatingsProps> = ({ productId }) => {
   return (
     <>
       <p onClick={openModal} style={{ margin: '5px 16px 3px 0', paddingLeft: '10px', fontWeight: '300', cursor: 'pointer' }}>
-        Leave a Review             
-   
-
+        Leave a Review  
       </p>
-      <div className="product-ratings">
-        <span className="rating-stars">
-          {Array(5)
-            .fill(0)
-            .map((_, index) => (
-              <span
-                key={index}
-                style={{ cursor: "pointer" }}
-              >
-               
-              </span>
-            ))}
-        </span>
-        <span className="rating-count">({ratings.length} reviews)</span>
-      </div>
+
       {isModalOpen && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" style={{ background: 'teal' }} onClick={e => e.stopPropagation()}>
             <h2 className="modal-title" style={{ marginBottom: '20px', borderBottom: 'solid 1px', lineHeight: '2' }}>
               Leave a Review  
             </h2>
+            
 
             {showConfirmation ? (
               <div className="confirmation-message">
